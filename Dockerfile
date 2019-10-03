@@ -17,14 +17,23 @@ WORKDIR /tmp/catmandu
 RUN cpanm -n -q --installdeps --skip-satisfied .
 RUN perl Build.PL && ./Build && ./Build install
 
-# cleanup sources 
+# cleanup sources
 WORKDIR /
 RUN rm -rf /tmp/catmandu
 
 # make user feel home
-RUN adduser --home /home/catmandu --uid 1000 --disabled-password --gecos "" catmandu
+#RUN adduser --home /home/catmandu --uid 1000 --disabled-password --gecos "" catmandu
+RUN mkdir -p /home/catmandu
 WORKDIR /home/catmandu
-USER catmandu
+#USER catmandu
+
+RUN cpanm Catmandu Catmandu::MARC
+RUN cpanm Dancer
+RUN cpanm Catmandu::OAI
+RUN cpanm Dancer::Plugin::Catmandu::OAI
+RUN cpanm Template
+RUN cpanm Catmandu::Store::Elasticsearch
+RUN cpanm Search::Elasticsearch::Client::5_0::Direct
 
 # Default command
 CMD ["bash"]
