@@ -1,0 +1,14 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:1.7
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+    #        volumes:
+    #            - "/path/to/local/deposit:/usr/share/elasticsearch/data"
+    restart: always
+
+networks:
+  catmandu:
+    driver: overlay
